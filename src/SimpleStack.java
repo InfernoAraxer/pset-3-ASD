@@ -1,13 +1,10 @@
-import java.util.Stack;
-
 public class SimpleStack {
 
 	public static String[] data;
 	public static int size;
 	
 	public SimpleStack() {
-		data = new String[1];
-		data[0] = "";
+		data = new String[0];
 		size = 0;
 	}
 	
@@ -78,13 +75,17 @@ public class SimpleStack {
 	
 	public String toString() {
 		String concat = "[";
-		for (int x = 0; x < data.length; x++) {
-			if (data[x] != null) {
-				concat += data[x];
-				concat += ", ";
+		if (size == 0) {
+			return "[]";
+		} else {
+			for (int x = 0; x < data.length; x++) {
+				if (data[x] != null) {
+					concat += data[x];
+					concat += ", ";
+				}
 			}
+			concat = concat.substring(0,concat.length()-2);
+			return concat += "]";
 		}
-		concat = concat.substring(0,concat.length()-2);
-		return concat += "]";
 	}
 }
