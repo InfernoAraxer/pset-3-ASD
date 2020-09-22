@@ -8,15 +8,6 @@ public class SimpleStack {
 		size = 0;
 	}
 	
-	public static void main(String[] args) {
-		SimpleStack simpleStack = new SimpleStack();
-		simpleStack.push("first in");
-        simpleStack.push("second in");
-        simpleStack.push("third in");
-        simpleStack.push("last in");
-		System.out.println(simpleStack.search("last in"));
-	}
-	
 	public boolean empty() {
 		return (size == 0) ? true : false;
 	}
@@ -29,63 +20,45 @@ public class SimpleStack {
 		}
 	}
 	public String pop() {
-		String removed = data[size - 1];
+		String removed = data[size-1];
 		if (size == 0) {
 			throw new IndexOutOfBoundsException();
 		} else {
-			String[] temp = new String[size-1];
-			for (int x = 0; x < size - 1; x++) {
-				temp[x] = data[x];
-			}
-			data = new String[size - 1];
-			data = temp;
+			data[size-1] = null;
 			size--;
-			if (size == 0) {
-				data = new String[1];
-				data[0] = "";
-				return data[0];
-			}
 			return removed;
 		}
 	}
 
-	public String push(String s) {
-		String[] temp = new String[size+1];
-		for (int x = 0; x < size; x++) {
-			temp[x] = data[x];
-		}
-		if (s == null) {
-			s = "null";
-		}
-		temp[size] = s;
-		data = new String[size+1];
-		data = temp;
+	public void push(String s) {
+		addSpace();
 		size++;
-		return s;
+		data[size-1] = s;
 	}
 	
 	public int search(String s) {
 		for (int x = 0; x < size; x++) {
-			if (data[x] == s) {
-				return size - x;
-			}
+			if (data[x] == s) return size-x;
 		}
 		return -1;
 	}
 	
 	public String toString() {
 		String concat = "[";
-		if (size == 0) {
-			return "[]";
-		} else {
-			for (int x = 0; x < data.length; x++) {
-				if (data[x] != null) {
-					concat += data[x];
-					concat += ", ";
-				}
+		for (int x = 0; x < size - 1; x++) {
+			concat += data[x] + ", ";
+		}
+		concat += (size != 0) ? data[size - 1] + "]" : "]" ;
+		return concat;
+	}
+	
+	public void addSpace() {
+		if (data.length == size) {
+			String[] temp = new String[size + 10];
+			for(int x = 0; x < size; x++) {
+				temp[x] = data[x];
 			}
-			concat = concat.substring(0,concat.length()-2);
-			return concat += "]";
+			data = temp;
 		}
 	}
 }
